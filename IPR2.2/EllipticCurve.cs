@@ -1,37 +1,50 @@
-﻿namespace IPR2._2
+﻿using System.Numerics;
+
+namespace IPR2._2
 {
     class EllipticCurve
     {
-        public long P = 43;
-        public long A { get; set; } = 1;
-        public long B { get; set; } = 5;
+        public BigInteger P = 43;
+        public BigInteger A { get; set; } = 1;
+        public BigInteger B { get; set; } = 5;
+
+        public override string ToString()
+        {
+            return $"y^2 = x^3 + {this.A}x + {this.B}";
+        }
 
         public EllipticCurve()
         {
 
         }
-        public long mod(long a, long m)
+
+        public EllipticCurve(BigInteger a, BigInteger b)
+        {
+            A = a;
+            B = b;  
+        }
+        public BigInteger mod(BigInteger a, BigInteger m)
         {
             while (a < 0)
             {
                 a += m;
             }
-            long result = a % m;
+            BigInteger result = a % m;
             return result;
         }
 
-        public long modInverse(long a, long m)
+        public BigInteger modInverse(BigInteger a, BigInteger m)
         {
-            long m0 = m;
-            long y = 0, x = 1;
+            BigInteger m0 = m;
+            BigInteger y = 0, x = 1;
 
             if (m == 1)
                 return 0;
 
             while (a > 1)
             {
-                long q = a / m;
-                long t = m;
+                BigInteger q = a / m;
+                BigInteger t = m;
 
                 m = a % m;
                 a = t;
@@ -49,9 +62,9 @@
 
         public Point Addition(Point point1, Point point2)
         {
-            long s;
-            long x;
-            long y;
+            BigInteger s;
+            BigInteger x;
+            BigInteger y;
 
             if (point1.X == point2.X && point1.Y == point2.Y)
             {
@@ -79,7 +92,7 @@
             return new Point(x, y);
         }
 
-        public Point Multiplication(Point point, long k)
+        public Point Multiplication(Point point, BigInteger k)
         {
             Point result = new Point(point.X, point.Y);
             for (int i = 0; i < k - 1; i++)

@@ -1,14 +1,16 @@
-﻿namespace IPR2._2
+﻿using System.Numerics;
+
+namespace IPR2._2
 {
     class Point
     {
-        public Point(long x, long y)
+        public Point(BigInteger x, BigInteger y)
         {
             this.X = x;
             this.Y = y;
         }
-        public long X { get; set; }
-        public long Y { get; set; }
+        public BigInteger X { get; set; }
+        public BigInteger Y { get; set; }
 
         public bool IsOnCurve(EllipticCurve curve)
         {
@@ -17,7 +19,7 @@
 
         public override string ToString()
         {
-            return $"y^2 = x^3 + {this.X}x + {this.Y}";
+            return $"[{this.X},{this.Y}]";
         }
     }
 }
