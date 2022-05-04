@@ -50,6 +50,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.fileLabel = new System.Windows.Forms.Label();
+            this.labelP = new System.Windows.Forms.Label();
+            this.inputP = new System.Windows.Forms.TextBox();
             openfileButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -238,15 +240,34 @@
             this.fileLabel.AutoSize = true;
             this.fileLabel.Location = new System.Drawing.Point(12, 33);
             this.fileLabel.Name = "fileLabel";
-            this.fileLabel.Size = new System.Drawing.Size(44, 15);
+            this.fileLabel.Size = new System.Drawing.Size(42, 15);
             this.fileLabel.TabIndex = 20;
-            this.fileLabel.Text = "Results";
+            this.fileLabel.Text = "No file";
+            // 
+            // labelP
+            // 
+            this.labelP.AutoSize = true;
+            this.labelP.Location = new System.Drawing.Point(393, 278);
+            this.labelP.Name = "labelP";
+            this.labelP.Size = new System.Drawing.Size(81, 15);
+            this.labelP.TabIndex = 22;
+            this.labelP.Text = "Field order (P)";
+            // 
+            // inputP
+            // 
+            this.inputP.Location = new System.Drawing.Point(393, 296);
+            this.inputP.Name = "inputP";
+            this.inputP.Size = new System.Drawing.Size(115, 23);
+            this.inputP.TabIndex = 21;
+            this.inputP.Text = "43";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(537, 450);
+            this.Controls.Add(this.labelP);
+            this.Controls.Add(this.inputP);
             this.Controls.Add(this.fileLabel);
             this.Controls.Add(openfileButton);
             this.Controls.Add(this.label1);
@@ -298,5 +319,7 @@
         private Label label1;
         private OpenFileDialog openFileDialog;
         private Label fileLabel;
+        private Label labelP;
+        private TextBox inputP;
     }
 }

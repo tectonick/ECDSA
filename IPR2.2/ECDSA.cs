@@ -18,12 +18,12 @@ namespace IPR2._2
             PK = Curve.Multiplication(G, X);
         }
 
-        public ECDSA(EllipticCurve curve, BigInteger q, BigInteger k)
+        public ECDSA(EllipticCurve curve, BigInteger q, BigInteger k, Point g)
         {
             Curve = curve;
             Q = q;
             //X = x;
-            //G = g;
+            G = g;
             K = k;
             PK = Curve.Multiplication(G, X);
         }

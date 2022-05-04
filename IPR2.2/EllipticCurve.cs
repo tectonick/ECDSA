@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Collections;
+using System.Numerics;
 
 namespace IPR2._2
 {
@@ -8,20 +9,58 @@ namespace IPR2._2
         public BigInteger A { get; set; } = 1;
         public BigInteger B { get; set; } = 5;
 
+        public List<Point> Points;
+
+        public int GroupOrder()
+        {
+            return Points.Count;
+        }
+
+        public Point FindGenerator(int SubgroupOrder)
+        {
+            int cofactor = GroupOrder() / SubgroupOrder;
+            foreach (var item in Points)
+            {
+                Point possibleGenerator = Multiplication(item, cofactor);
+                if (!possibleGenerator.IsIdentity()) return possibleGenerator;
+            }
+            return null;
+        }
+        public List<Point> GeneratePoints()
+        {
+            List<Point> points = new List<Point>();
+            int[] squares=new int[(int)P]; // x^2
+            int[] rightsides= new int[(int)P]; //x^3 + Ax + B
+            for (int i = 0; i < P; i++)
+            {
+                squares[i] = (int) mod(i * i, P);
+                rightsides[i] = (int)mod(i * i * i + A * i + B,P);
+            }
+            for (int i = 0; i < P; i++)
+            {
+                int x = i;
+                int rightside = rightsides[i];
+                //points.Add(new Point(i, rightsides[i]));
+                for (int j = 0; j < P; j++)
+                {
+                    if (squares[j] == rightside) points.Add(new Point(x, j));
+                }
+            }
+            points.Add(new Point(Point.IDENTITY));
+            return points;
+        }
+
         public override string ToString()
         {
             return $"y^2 = x^3 + {this.A}x + {this.B}";
         }
 
-        public EllipticCurve()
-        {
-
-        }
-
-        public EllipticCurve(BigInteger a, BigInteger b)
+        public EllipticCurve(BigInteger a, BigInteger b, BigInteger p)
         {
             A = a;
-            B = b;  
+            B = b;
+            P = p;
+            Points=GeneratePoints();
         }
         public BigInteger mod(BigInteger a, BigInteger m)
         {
@@ -66,21 +105,20 @@ namespace IPR2._2
             BigInteger x;
             BigInteger y;
 
+            if (point1.IsIdentity()) return new Point (point2.X,point2.Y);
+            if (point2.IsIdentity()) return new Point(point1.X, point1.Y);
+
             if (point1.X == point2.X && point1.Y == point2.Y)
             {
+                if (point1.Y==0)
+                {
+                    return new Point(Point.IDENTITY);
+                }
                 s = mod((3 * point1.X * point1.X + A) * modInverse(2 * point1.Y, P), P);
             }
-            else if (point1.X == 0 && point1.Y == 0)
+            else if (point1.X - point2.X==0)
             {
-                return point2;
-            }
-            else if (point2.X == 0 && point2.Y == 0)
-            {
-                return point2;
-            }
-            else if (point1.X == point2.X && mod(P - point1.Y, P) == point2.Y)
-            {
-                return new Point(0, 0);
+                return new Point(Point.IDENTITY);
             }
             else
             {
